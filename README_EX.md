@@ -11,6 +11,8 @@
 
 - 打开 MSYS2 MinGW x64
 
+- Renderdoc工程需要与msys2在同一个盘符
+
 - 执行命令
 
   ```
