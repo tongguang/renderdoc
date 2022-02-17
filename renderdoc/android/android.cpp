@@ -310,7 +310,8 @@ bool CheckAndroidServerVersion(const rdcstr &deviceID, ABI abi)
   rdcstr hostVersionName = GitVersionHash;
 
   // False positives will hurt us, so check for explicit matches
-  if((hostVersionCode == versionCode) && (hostVersionName == versionName))
+  // if((hostVersionCode == versionCode) && (hostVersionName == versionName))
+  if((hostVersionCode == versionCode))
   {
     RDCLOG("Installed server version (%s:%s) is compatible", versionCode.c_str(),
            versionName.c_str());
@@ -1308,8 +1309,7 @@ ExecuteResult AndroidRemoteServer::ExecuteAndInject(const rdcstr &packageAndActi
 
     rdcstr installedPath = Android::GetPathForPackage(m_deviceID, packageName);
 
-    rdcstr RDCLib = Android::adbExecCommand(m_deviceID, "shell ls " + installedPath +
-                                                            "/lib/*/" RENDERDOC_ANDROID_LIBRARY)
+    rdcstr RDCLib = Android::adbExecCommand(m_deviceID, "shell ls /system/*/" RENDERDOC_ANDROID_LIBRARY)
                         .strStdout.trimmed();
 
     if(Android_Debug_ProcessLaunch())
@@ -1318,13 +1318,13 @@ ExecuteResult AndroidRemoteServer::ExecuteAndInject(const rdcstr &packageAndActi
     }
     // some versions of adb/android return the error message on stdout, so try to detect those and
     // clear the output.
-    if(RDCLib.size() < installedPath.size() || RDCLib.substr(0, installedPath.size()) != installedPath)
-      RDCLib.clear();
+    //if(RDCLib.size() < installedPath.size() || RDCLib.substr(0, installedPath.size()) != installedPath)
+    //  RDCLib.clear();
 
     // some versions of adb/android also don't print any error message at all! Look to see if the
     // wildcard glob is still present.
-    if(RDCLib.find("/lib/*/" RENDERDOC_ANDROID_LIBRARY) >= 0)
-      RDCLib.clear();
+    //if(RDCLib.find("/lib/*/" RENDERDOC_ANDROID_LIBRARY) >= 0)
+    //  RDCLib.clear();
 
     if(RDCLib.empty())
     {

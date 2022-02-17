@@ -19,7 +19,7 @@ if(BUILD_ANDROID)
         ERROR_VARIABLE _output
         OUTPUT_STRIP_TRAILING_WHITESPACE
         ERROR_STRIP_TRAILING_WHITESPACE)
-    
+
     if(NOT _result AND _output MATCHES "version \"([0-9]+).([0-9]+)")
         message(STATUS "Java in JAVA_HOME is ${CMAKE_MATCH_1}.${CMAKE_MATCH_2}")
     else()
@@ -57,13 +57,13 @@ if(BUILD_ANDROID)
         CACHE STRING
         "The Android toolchain file")
 
-    option(STRIP_ANDROID_LIBRARY "Strip the resulting android library" OFF)
+    option(STRIP_ANDROID_LIBRARY "Strip the resulting android library" ON)
 
     # Set default API level to 21 if not configured explicitly
     if(NOT ANDROID_PLATFORM)
         set(ANDROID_PLATFORM "android-21")
     endif()
-    
+
     # default to libc++_static as the other options can cause crashes
     if(NOT ANDROID_STL)
         set(ANDROID_STL "c++_static")
@@ -161,7 +161,7 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/.git/HEAD")
     configure_file("${CMAKE_SOURCE_DIR}/.git/HEAD" "${CMAKE_BINARY_DIR}/git_HEAD" COPYONLY)
 
     # in addition, if HEAD is a ref, do the same on the file it's pointing to (since HEAD won't change for commits to the current branch)
-    # if we change branch then this will correspondingly 
+    # if we change branch then this will correspondingly
     file(READ ${CMAKE_SOURCE_DIR}/.git/HEAD HEAD_CONTENTS)
     string(STRIP "${HEAD_CONTENTS}" HEAD_CONTENTS)
 
